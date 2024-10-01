@@ -47,9 +47,3 @@ window.onscroll = () => {
 
     footer.classList.toggle('show-animate', this.innerHeight + this.scrollY >= document.scrollingElement.scrollHeight);
 }
-
-let Btn = document.querySelector("#subBtn");
-
-Btn.addEventListener("click", () => {
-    alert("Your message has submited. We will respond you very soon...");
-})
