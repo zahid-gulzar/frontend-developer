@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Cedarville+Cursive&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet" href="todoHome.css">
+        <title>Todo Web Application</title>
+    </head>
+    <body>
+        <div class="img-container">
+            <img src="indexImg2.png" alt="img">
+        </div>
+
+        <div class="about-container">
+            <div class="heading">
+                <h1>To-Do List</h1>
+            </div>
+            <div class="para">
+                <p style="text-align: justify;">Stay organized and manage your daily routine with ease. You can add tasks you want to complete, delete the ones you no longer need, and keep track of everything in one place. Our application is simple, flexible, and designed to help you remind yourself of the things that matter every day. Enjoy the simplicity and versatility of managing your tasks with us!</p>
+            </div>
+            <div class="button" id="startBtn">
+                <button>Get Started</button>
+                <i class="fa-solid fa-arrow-right" type="button"></i>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById("startBtn").addEventListener("click", function() {
+                window.location.href = "login.html";  
+            });
+        </script>
+    </body>
+</html>

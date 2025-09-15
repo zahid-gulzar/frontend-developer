@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* background-image: url("todoBg.jpg"); */
+    background-color: #0D1117;
+}
+
+.greeting {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #6D28D9, #9333EA, #C084FC); /* purple gradient */
+    animation: fadeOut 1s ease-in forwards;
+    animation-delay: 4s; /* start fading after 4s */
+}
+
+.greeting h1 {
+    color: #fff;
+    font-size: 2rem;
+    font-family: "Poppins", sans-serif;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                 0 0 20px rgba(255, 255, 255, 0.6);
+    animation: popIn 1s ease-out;
+}
+
+.navBar {
+    display: flex;
+    justify-content: space-around;
+    margin: 50px 0;
+    position: sticky;
+    top: 10px;
+}
+
+.userBox {
+    /* background-color: yellow; */
+    display: flex;
+    gap: 10px;
+}
+
+.userBox p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #E6EDF3;
+}
+
+.userBox #userName {
+    color: #2F81F7;
+}
+
+.time p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+#timeDisplay {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.mainHeading {
+    /* background-color: yellowgreen; */
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.mainHeading h1 {
+    font-family: "Tagesschrift", system-ui;
+    font-weight: 400;
+    font-weight: 400;
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.mainHeading img {
+    height: 2.3rem;
+}
+
+.taskAdder input {
+    /* background-color: yellowgreen; */
+    margin-left: 10px;
+    border-radius: 15px;
+    height: 3rem;
+    margin-bottom: 15px;
+}
+
+.taskAdder button {
+    background-color: #2F81F7;
+    color: #fff;
+    margin-right: 10px;
+    border-radius: 15px;
+    height: 3rem;
+    font-weight: bold;
+    border: none;
+}
+
+.taskAdder button:hover {
+    background-color: #1F6FEB;
+}
+
+#allTasks {
+  max-height: 380px; 
+  overflow-y: auto; 
+  margin-top: 20px;
+  padding-right: 5px;
+}
+
+
+#allTasks::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.taskContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 2px solid #30363D;
+    border-radius: 15px;
+    margin: 15px 10px;
+    background-color: #161B22;
+}
+
+.taskContainer input {
+    appearance: none;
+    height: 1.2rem;
+    width: 1.2rem;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.taskContainer p {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #E6EDF3;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.taskContainer i {
+    font-size: 1.5rem;
+    color: #F85149;
+    cursor: pointer;
+}
+
+.taskContainer i:hover {
+    color: #DC2626;
+}
+
+footer {
+    /* background-color: yellow; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    margin-top: 15px;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Fade out greeting container */
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* Pop-in animation */
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.popIn {
+    animation: popIn 1s ease-out forwards;
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; visibility: hidden; }
+}
+.fadeOut {
+    animation: fadeOut 1s ease-in forwards;
+}
