@@ -25,35 +25,46 @@
   </div>
 
 <script>
-const API = 'http://localhost:5000/api';
+  // ✅ Use deployed backend URL
+  const API = 'https://frontend-developer-2r2v.onrender.com/api';
 
-document.getElementById('loginBtn').addEventListener('click', async () => {
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const msg = document.getElementById('msg');
-  msg.textContent = '';
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const msg = document.getElementById('msg');
+    msg.textContent = '';
 
-  if (!email || !password) { msg.textContent = 'Email + password required'; msg.style.color='orange'; return; }
+    if (!email || !password) { 
+      msg.textContent = 'Email + password required'; 
+      msg.style.color='orange'; 
+      return; 
+    }
 
-  try {
-    const res = await fetch(`${API}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Login failed');
+    try {
+      const res = await fetch(`${API}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
 
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
-    msg.textContent = 'Login successful! Redirecting...';
-    msg.style.color = 'lightgreen';
-    setTimeout(() => window.location.href = 'todo.html', 600);
-  } catch (err) {
-    msg.textContent = err.message;
-    msg.style.color = 'red';
-  }
-});
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || 'Login failed');
+
+      // Save token and user in localStorage
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      msg.textContent = 'Login successful! Redirecting...';
+      msg.style.color = 'lightgreen';
+      
+      setTimeout(() => window.location.href = 'todo.html', 600);
+
+    } catch (err) {
+      msg.textContent = err.message;
+      msg.style.color = 'red';
+    }
+  });
 </script>
 </body>
 </html>
