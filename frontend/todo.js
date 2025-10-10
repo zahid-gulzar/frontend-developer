@@ -1,3 +1,5 @@
+const API_URL = "https://frontend-developer-2r2v.onrender.com/api"; 
+
 // Use same selectors you had
 let allTasks = document.querySelector("#allTasks");
 let taskInp = document.querySelector(".taskInput");
