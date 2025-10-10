@@ -188,7 +188,7 @@ footer {
 /* Fade-out animation */
 @keyframes fadeOut {
     from { opacity: 1; }
-    to { opacity: 0; visibility: hidden; }
+    to { opacity: 0; visibility: hidden; display: none; }
 }
 .fadeOut {
     animation: fadeOut 1s ease-in forwards;
