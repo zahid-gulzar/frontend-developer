@@ -1,10 +1,11 @@
+// backend/routes/tasks.js
 const express = require('express');
 const Task = require('../models/Task');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-// GET all tasks for user
+// Get tasks
 router.get('/', auth, async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id }).sort({ createdAt: -1 });
@@ -15,7 +16,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// POST create new task
+// Add task
 router.post('/', auth, async (req, res) => {
   try {
     const { text } = req.body;
@@ -30,7 +31,7 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// PUT update task
+// Update task
 router.put('/:id', auth, async (req, res) => {
   try {
     const { text, completed } = req.body;
@@ -48,7 +49,7 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-// DELETE task
+// Delete task
 router.delete('/:id', auth, async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);

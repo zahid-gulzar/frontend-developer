@@ -1,3 +1,4 @@
+// backend/server.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -5,32 +6,18 @@ const connectDB = require('./config/db');
 
 const app = express();
 
+// Connect MongoDB
 connectDB();
 
+// Parse JSON
 app.use(express.json());
 
-// ✅ Updated CORS to allow your deployed frontend
+// CORS setup
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (Postman or curl)
-    if (!origin) return callback(null, true);
-
-    // Allow localhost for development
-    if (
-      origin.startsWith("http://localhost:") ||
-      origin.startsWith("http://127.0.0.1:")
-    ) {
-      return callback(null, true);
-    }
-
-    // ✅ Allow your deployed frontend
-    if (origin === "https://frontend-developer-2r2v.onrender.com") {
-      return callback(null, true);
-    }
-
-    // Block any other origins
-    callback(new Error("Not allowed by CORS"));
-  },
+  origin: [
+    process.env.FRONTEND_URL,     // Deployed frontend
+    "http://localhost:3000"       // Optional for local dev
+  ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
@@ -39,7 +26,9 @@ app.use(cors({
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
 
+// Root
 app.get('/', (req, res) => res.send('✅ ToDo Backend is running'));
 
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
