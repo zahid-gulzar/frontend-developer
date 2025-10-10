@@ -3,7 +3,8 @@ let allTasks = document.querySelector("#allTasks");
 let taskInp = document.querySelector(".taskInput");
 let addBtn = document.querySelector("#button-addon2");
 
-const API = 'http://127.0.0.1:5000/api';
+// ✅ Use your deployed backend URL
+const API = 'https://frontend-developer-2r2v.onrender.com/api';
 
 const token = localStorage.getItem('token');
 
@@ -26,8 +27,9 @@ function createTaskElement(task) {
 
   // styling for completed
   if (task.completed) {
-    taskContainer.querySelector('p').style.textDecoration = 'line-through';
-    taskContainer.querySelector('p').style.color = '#9CA3AF';
+    const text = taskContainer.querySelector('p');
+    text.style.textDecoration = 'line-through';
+    text.style.color = '#9CA3AF';
     taskContainer.style.backgroundColor = '#0F5132';
     const cb = taskContainer.querySelector('.checkbox');
     cb.style.backgroundColor = '#16A34A';
@@ -42,6 +44,7 @@ async function loadTasks() {
     const res = await fetch(`${API}/tasks`, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
+    if (!res.ok) throw new Error('Failed to fetch tasks');
     const tasks = await res.json();
     allTasks.innerHTML = '';
     tasks.forEach(t => allTasks.appendChild(createTaskElement(t)));
@@ -51,9 +54,12 @@ async function loadTasks() {
 }
 
 allTasks.addEventListener("click", async function (e) {
+  const parentTask = e.target.closest(".taskContainer");
+  if (!parentTask) return;
+  const id = parentTask.dataset.id;
+
+  // Toggle completed
   if (e.target.classList.contains("checkbox")) {
-    const parentTask = e.target.closest(".taskContainer");
-    const id = parentTask.dataset.id;
     const completed = e.target.checked;
     try {
       const res = await fetch(`${API}/tasks/${id}`, {
@@ -64,8 +70,10 @@ allTasks.addEventListener("click", async function (e) {
         },
         body: JSON.stringify({ completed })
       });
+      if (!res.ok) throw new Error('Failed to update task');
       const updated = await res.json();
-      // update styles
+
+      // Update styles
       const text = parentTask.querySelector('p');
       if (completed) {
         e.target.style.backgroundColor = "#16A34A";
@@ -78,19 +86,23 @@ allTasks.addEventListener("click", async function (e) {
         text.style.textDecoration = "none";
         text.style.color = "#E6EDF3";
       }
-    } catch (err) { console.error(err); }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
+  // Delete task
   if (e.target.classList.contains("delBtn")) {
-    const parentTask = e.target.closest(".taskContainer");
-    const id = parentTask.dataset.id;
     try {
-      await fetch(`${API}/tasks/${id}`, {
+      const res = await fetch(`${API}/tasks/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': 'Bearer ' + token }
       });
+      if (!res.ok) throw new Error('Failed to delete task');
       parentTask.remove();
-    } catch (err) { console.error(err); }
+    } catch (err) {
+      console.error(err);
+    }
   }
 });
 
@@ -108,6 +120,7 @@ addBtn.addEventListener("click", async function () {
       },
       body: JSON.stringify({ text: taskText })
     });
+    if (!res.ok) throw new Error('Failed to add task');
     const task = await res.json();
     allTasks.appendChild(createTaskElement(task));
     taskInp.value = "";
@@ -127,11 +140,7 @@ if (user && user.name) {
     document.getElementById('userName').textContent = user.name;
 }
 
-// Get current hour
-const now = new Date();
-const hour = now.getHours();
-
-// Function to update time
+// Display current time
 function updateTime() {
     const now = new Date();
     let hours = now.getHours();
@@ -145,10 +154,5 @@ function updateTime() {
     document.getElementById('timeDisplay').textContent = `Time: ${hours}:${minsStr} ${ampm}`;
 }
 
-// Call once immediately
 updateTime();
-
-// Update every 1 second
 setInterval(updateTime, 1000);
-
-

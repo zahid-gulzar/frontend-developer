@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-// GET /api/tasks/      -> all tasks for user
+// GET all tasks for user
 router.get('/', auth, async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id }).sort({ createdAt: -1 });
@@ -15,7 +15,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// POST /api/tasks/     -> create new task
+// POST create new task
 router.post('/', auth, async (req, res) => {
   try {
     const { text } = req.body;
@@ -30,7 +30,7 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// PUT /api/tasks/:id   -> update (toggle completed or change text)
+// PUT update task
 router.put('/:id', auth, async (req, res) => {
   try {
     const { text, completed } = req.body;
@@ -48,7 +48,7 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-// DELETE /api/tasks/:id
+// DELETE task
 router.delete('/:id', auth, async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);

@@ -16,9 +16,7 @@ router.post('/signup', async (req, res) => {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: 'User already exists' });
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
-
+    const hash = await bcrypt.hash(password, 10);
     user = new User({ name, email, password: hash });
     await user.save();
 
@@ -64,20 +62,14 @@ router.post('/forgot-password', async (req, res) => {
     if (!user) return res.status(400).json({ message: 'No user with that email' });
 
     const token = crypto.randomBytes(32).toString('hex');
-    const expires = Date.now() + 3600000; // 1 hour
-
     user.resetPasswordToken = token;
-    user.resetPasswordExpires = expires;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    // Compose reset link - frontend route should handle /reset-password.html?token=...
     const resetLink = `${process.env.FRONTEND_URL}/reset-password.html?token=${token}&email=${encodeURIComponent(user.email)}`;
-
     const subject = 'Password reset for ToDo App';
-    const text = `You requested a password reset. Click the link to reset your password: ${resetLink}`;
-    const html = `<p>You requested a password reset. Click the link to reset your password:</p>
-                  <p><a href="${resetLink}">Reset password</a></p>
-                  <p>This link will expire in 1 hour.</p>`;
+    const text = `Reset your password: ${resetLink}`;
+    const html = `<p>Reset your password: <a href="${resetLink}">Click here</a></p>`;
 
     await sendEmail({ to: user.email, subject, text, html });
 
@@ -96,13 +88,9 @@ router.post('/reset-password', async (req, res) => {
 
     const user = await User.findOne({ email, resetPasswordToken: token });
     if (!user) return res.status(400).json({ message: 'Invalid token or email' });
+    if (user.resetPasswordExpires < Date.now()) return res.status(400).json({ message: 'Token expired' });
 
-    if (user.resetPasswordExpires < Date.now()) {
-      return res.status(400).json({ message: 'Token expired' });
-    }
-
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
+    user.password = await bcrypt.hash(newPassword, 10);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
