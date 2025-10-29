@@ -1,0 +1,358 @@
+/* ==================== VARIABLES ==================== */
+:root {
+  --bg: #0b3d2e;
+  --bg2: #0a5367;
+  --card: #123d45;
+  --text: #e0f7fa;
+  --muted: #b2dfdb;
+  --accent: #00ffb3;
+  --accent-2: #66fff0;
+  --danger: #ff7a7a;
+  --shadow: 0 10px 30px rgba(0,0,0,0.25);
+  --radius: 20px;
+  --spacing-xs: clamp(4px, 1vw, 8px);
+  --spacing-sm: clamp(8px, 2vw, 12px);
+  --spacing-md: clamp(12px, 3vw, 16px);
+  --spacing-lg: clamp(16px, 4vw, 24px);
+  --spacing-xl: clamp(20px, 5vw, 32px);
+}
+
+/* ==================== GLOBAL STYLES ==================== */
+* { 
+  box-sizing: border-box; 
+}
+
+html, body { 
+  margin: 0; 
+  padding: 0; 
+  font-family: 'Poppins', sans-serif; 
+}
+
+body {
+  color: var(--text);
+  background: linear-gradient(120deg, var(--bg), var(--bg2));
+  background-size: 200% 200%;
+  animation: gradientShift 18s ease infinite;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: var(--spacing-lg);
+  overflow-x: hidden;
+}
+
+@keyframes gradientShift {
+  0% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+  100% { 
+    background-position: 0% 50%; 
+  }
+}
+
+/* ==================== BACKGROUND ORBS ==================== */
+.bg-orb { 
+  position: fixed; 
+  width: clamp(200px, 50vw, 380px); 
+  height: clamp(200px, 50vw, 380px); 
+  border-radius: 50%; 
+  filter: blur(clamp(30px, 8vw, 60px)); 
+  opacity: 0.18; 
+  z-index: 0; 
+  pointer-events: none; 
+}
+
+.orb-1 { 
+  background: #00ffb3; 
+  top: -120px; 
+  left: -80px; 
+  animation: drift1 30s linear infinite; 
+}
+
+.orb-2 { 
+  background: #66fff0; 
+  bottom: -140px; 
+  right: -100px; 
+  animation: drift2 36s linear infinite; 
+}
+
+.orb-3 { 
+  background: #00d4ff; 
+  top: 40%; 
+  left: -140px; 
+  animation: drift3 42s linear infinite; 
+}
+
+@keyframes drift1 { 
+  0% {
+    transform:translate(0,0)
+  } 
+  50% {
+    transform:translate(20px,40px)
+  } 
+  100% {
+    transform:translate(0,0)
+  } 
+}
+
+@keyframes drift2 { 
+  0% {
+    transform:translate(0,0)
+  } 
+  50% {
+    transform:translate(-30px,-30px)
+  } 
+  100% {
+    transform:translate(0,0)
+  } 
+}
+
+@keyframes drift3 { 
+  0% {
+    transform:translate(0,0)
+  } 
+  50% {
+    transform:translate(40px,-20px)
+  } 
+  100% {
+    transform:translate(0,0)
+  } 
+}
+
+/* ==================== APP CONTAINER ==================== */
+.app { 
+  width: 100%; 
+  max-width: 760px; 
+  position: relative; 
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================== HEADER ==================== */
+.header { 
+  text-align: center; 
+  margin-bottom: var(--spacing-md); 
+  flex-shrink: 0; 
+}
+
+.brand { 
+  margin:0 0 6px 0; 
+  font-weight:800; 
+  display:inline-flex; 
+  gap:var(--spacing-xs); 
+  align-items:center; 
+  font-size: clamp(24px,5vw,32px);
+}
+
+.brand-icon { 
+  font-size: clamp(24px,6vw,32px); 
+  animation:bob 3.8s ease-in-out infinite; 
+}
+
+@keyframes bob { 
+  0%,100% { 
+    transform: translateY(0); 
+  } 
+  50% { 
+    transform: translateY(-4px); 
+  } 
+}
+
+.tagline { 
+  margin:0; 
+  color: var(--muted); 
+  font-size: clamp(14px,3.5vw,18px); 
+}
+
+/* ==================== SEARCH FORM ==================== */
+.search { 
+  display:grid; 
+  grid-template-columns:1fr auto auto; 
+  gap: var(--spacing-sm); 
+  background: rgba(18, 24, 50, 0.85); 
+  backdrop-filter: blur(15px); 
+  padding: var(--spacing-md); 
+  border-radius: var(--radius); 
+  box-shadow: var(--shadow); 
+  border: 2px solid var(--accent); 
+  margin-bottom: var(--spacing-sm); 
+  flex-shrink: 0;
+}
+
+.search input { 
+  background: #0f2630; 
+  border:2px solid #1e2550; 
+  color: var(--text); 
+  border-radius: 12px; 
+  height:48px; 
+  padding:0 var(--spacing-md); 
+  outline:none; 
+  width:100%; 
+  font-size:16px;
+}
+
+.search input::placeholder { 
+  color:#7c86b1; 
+}
+
+.unit-toggle { 
+  display:inline-flex; 
+  background:#0f2630; 
+  border:2px solid #1e2550; 
+  border-radius:12px; 
+  padding:4px; 
+  height:48px; 
+  align-items:center; 
+  gap:4px; 
+  min-width:min-content; 
+}
+
+.unit-btn { 
+  background:transparent; 
+  border:none; 
+  color:var(--muted); 
+  padding: 8px 14px; 
+  border-radius:8px; 
+  cursor:pointer; 
+  font-weight:700; 
+  font-size:14px; 
+  min-height:44px; 
+  min-width:44px; 
+}
+
+.unit-btn.active { 
+  background:#1a4250; 
+  color:#fff; 
+  box-shadow: inset 0 0 0 1px #2a3aaa; 
+}
+
+.btn { 
+  height:48px; 
+  border:none; 
+  padding:0 var(--spacing-lg); 
+  border-radius:12px; 
+  background: linear-gradient(135deg,#00ffb3,#00d4ff); color:white; 
+  font-weight:700; 
+  cursor:pointer; 
+  box-shadow: 0 8px 18px rgba(0,255,179,0.35); 
+  font-size:16px; 
+  min-height:44px; 
+}
+
+.btn:hover, .btn:active { 
+  transform:translateY(-1px); 
+  box-shadow:0 10px 20px rgba(0,255,179,0.45);
+}
+
+.pulse { 
+  animation:pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes pulse { 
+  0%,100% { 
+    box-shadow:0 0 0 0 rgba(0,255,179,0.35);
+  } 
+  50% { 
+    box-shadow:0 0 0 8px rgba(0,255,179,0.0); 
+  }
+}
+
+/* ==================== WEATHER CARDS ==================== */
+.card { 
+  background: rgba(18, 24, 50, 0.85); 
+  backdrop-filter: blur(20px); 
+  border-radius: var(--radius); 
+  box-shadow: var(--shadow); 
+  padding: var(--spacing-xl); 
+  margin-top: var(--spacing-md); 
+  border:1px solid rgba(0,255,179,0.3); 
+  animation: slideFade 420ms ease; 
+  flex-shrink:0;
+}
+
+@keyframes slideFade { 
+  from { 
+    opacity:0; 
+    transform:translateY(12px);
+  } 
+  to {
+    opacity:1; 
+    transform:translateY(0);
+  } 
+}
+
+/* ==================== META CARDS ==================== */
+.meta-item { 
+  background: rgba(15,22,48,0.8); 
+  border:1px solid #1e2550; 
+  padding:var(--spacing-md); 
+  border-radius:12px; 
+  text-align:center; 
+  font-size:14px; 
+  display:flex; 
+  flex-direction:column; 
+  justify-content:center; 
+  align-items:center; 
+  min-height:70px; 
+  transition: background 150ms ease;
+}
+
+.meta-item:hover { 
+  background: rgba(0,85,102,0.85); 
+}
+
+.meta-item span { 
+  font-size:12px; 
+  opacity:0.8; 
+  margin-bottom:6px; 
+  font-weight:500; 
+}
+
+.meta-item strong { 
+  font-size:16px; 
+  font-weight:600;
+  color: var(--text); 
+}
+
+/* ==================== FORECAST STRIP ==================== */
+.forecast-card:hover { 
+  transform:translateY(-4px); 
+  background: rgba(0,85,102,0.85); 
+}
+
+/* ==================== FOOTER ==================== */
+.footer { 
+  display:flex; 
+  flex-direction:column; 
+  align-items:center; 
+  margin-top: var(--spacing-lg); 
+  gap: var(--spacing-sm);
+}
+
+.linkedin-badge { 
+  border-radius:20px; 
+  padding: var(--spacing-sm) var(--spacing-md); 
+  font-size:14px; 
+  display:inline-flex; 
+  align-items:center; 
+  gap: var(--spacing-xs);
+}
+
+.linkedin-badge { 
+  background:#0a66c2; 
+  color:white; 
+  font-weight:500; 
+  text-decoration:none; 
+  transition: all .2s ease;
+}
+
+.linkedin-badge:hover { 
+  background:#004182; 
+  transform:translateY(-1px); 
+}
